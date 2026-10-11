@@ -119,18 +119,17 @@
     min-height: clamp(640px, calc(100vh - 104px), 960px);
     display: flex; align-items: center;
     overflow: hidden;
-    /* звёзды: несколько слоёв точек разного шага */
-    background:
-      radial-gradient(1px 1px at 20px 30px, #ffffff55 50%, transparent 51%) 0 0 / 140px 140px,
-      radial-gradient(1px 1px at 90px 80px, #ffffff33 50%, transparent 51%) 0 0 / 190px 190px,
-      radial-gradient(1.5px 1.5px at 50px 120px, #ffffff44 50%, transparent 51%) 0 0 / 260px 260px,
-      radial-gradient(ellipse at 70% 50%, #0f1a3a 0%, var(--bg) 60%);
+    /* фото ночного неба с Млечным Путём; чёрный — пока картинка грузится */
+    background: var(--bg) url("assets/hero-sky.jpg") center / cover no-repeat;
   }
 
-  /* Затемнение слева: текст читается, «картинка» справа остаётся яркой */
+  /* Затемнение слева: текст читается, «картинка» справа остаётся яркой.
+     Снизу — переход в чёрный, чтобы фото не обрывалось на границе секции. */
   .hero::after {
     content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: linear-gradient(90deg, var(--bg) 0%, #000000cc 35%, transparent 70%);
+    background:
+      linear-gradient(0deg, var(--bg) 0%, transparent 25%),
+      linear-gradient(90deg, var(--bg) 0%, #000000cc 35%, transparent 70%);
   }
 
   .hero .container { position: relative; z-index: 2; width: 100%; padding-top: var(--s-8); padding-bottom: var(--s-7); }
