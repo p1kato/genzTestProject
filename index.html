@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ФИЗИКА!!! Всё о физике — Законы, Формулы, Учёные, Опыты</title>
+<style>
+  /* =========================================================
+     АНТИПРИМЕР: здесь намеренно сломаны ВСЕ отступы.
+     Никакой системы (4/8/16/24…), всё «на глаз».
+     ========================================================= */
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1b1b20;
+    color: #c9c9d1;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.05;            /* строки слипаются */
+  }
+
+  /* Окно-рамка: контент прилипает к рамке */
+  .window {
+    border: 3px solid #ee3d96;
+    border-radius: 18px;
+    margin: 3px 47px 0 9px;       /* разные отступы со всех сторон */
+    padding: 0 2px 0 1px;         /* текст почти касается рамки */
+    overflow: hidden;
+  }
+
+  .dots { padding: 11px 0 0 23px; }
+  .dots span {
+    display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+    margin-right: 1px;            /* точки слиплись */
+  }
+  .dots span:nth-child(1){ background:#ee3d96; }
+  .dots span:nth-child(2){ background:#e8c547; margin-right: 19px; }
+  .dots span:nth-child(3){ background:#86d4c9; }
+
+  /* Шапка: меню без промежутков, лого вплотную */
+  header {
+    background: #24242b;
+    margin-top: 71px;             /* огромная дыра после точек */
+    padding: 2px;
+  }
+  header .logo {
+    font-size: 30px; font-weight: 900; color: #e8c547;
+    display: inline-block; padding: 0; margin-right: 0;
+  }
+  nav { display: inline; }
+  nav a {
+    color: #fff; background: #5b4ef5; text-decoration: none;
+    padding: 1px 2px; margin: 0;  /* пункты меню склеены */
+    font-size: 13px;
+  }
+  nav a:nth-child(even){ background: #ee3d96; }
+  nav a:nth-child(4){ padding: 14px 30px; } /* один пункт внезапно огромный */
+
+  /* Бегущая строка вплотную к шапке */
+  .ticker {
+    background: #e8c547; color: #1b1b20; font-weight: bold;
+    font-size: 12px; padding: 0 0 0 0; white-space: nowrap;
+  }
+
+  /* Заголовок: margin-top меньше margin-bottom —
+     он «принадлежит» не своему тексту, а предыдущему блоку */
+  h1 {
+    background: #e8c547; color: #1b1b20;
+    font-size: 34px; display: inline-block;
+    padding: 0 3px;
+    margin: 2px 0 64px 41px;
+    border-radius: 20px;
+  }
+  h2 {
+    color: #e8c547; font-size: 24px;
+    margin: 0 0 39px 5px;         /* заголовок оторван от текста */
+  }
+  h3 { color: #86d4c9; font-size: 17px; margin: 0; }
+
+  .lead p {
+    background: #7b7a86; color: #1b1b20;
+    margin: 0 18px 1px 41px;      /* абзацы без воздуха */
+    padding: 0 2px;
+    border-radius: 10px;
+  }
+  .lead p:nth-child(2){ margin-left: 39px; margin-right: 74px; } /* отступ «плывёт» на 2px */
+  .lead p:nth-child(3){ margin-left: 44px; }
+
+  /* Кнопки слиплись + у всех разный padding */
+  .buttons { margin: 6px 0 0 41px; }
+  .btn {
+    border: none; color: #fff; font-size: 14px; cursor: pointer;
+    margin: 0; border-radius: 4px;
+  }
+  .btn.blue { background: #5b4ef5; padding: 3px 21px; }
+  .btn.pink { background: #ee3d96; padding: 11px 6px; }
+  .btn.teal { background: #86d4c9; padding: 0 2px; color: #1b1b20; }
+  .btn.yell { background: #e8c547; padding: 7px 40px 1px 3px; color: #1b1b20; }
+
+  /* Карточки: gap = 0, внутренние отступы у всех разные */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 1px 0 0 41px;
+  }
+  .card { background: #131317; border: 1px solid #2c2c33; }
+  .card:nth-child(1){ background:#86d4c9; color:#1b1b20; padding: 0; }
+  .card:nth-child(2){ padding: 37px 4px 0 4px; }
+  .card:nth-child(3){ background:#ee3d96; color:#fff; padding: 2px 2px 60px 19px; }
+  .card:nth-child(4){ padding: 12px; }
+  .card:nth-child(5){ padding: 0 31px; }
+  .card:nth-child(6){ background:#5b4ef5; color:#fff; padding: 9px 0; }
+  .card:nth-child(7){ padding: 1px; }
+  .card:nth-child(8){ background:#e8c547; color:#1b1b20; padding: 22px 3px 3px 22px; }
+  .card h3 { margin-bottom: 0; }
+  .card:nth-child(1) h3, .card:nth-child(3) h3,
+  .card:nth-child(6) h3, .card:nth-child(8) h3 { color: inherit; }
+  .card .formula {
+    font-family: "Courier New", monospace; font-size: 20px; font-weight: bold;
+    margin: 0;                    /* формула прилипла к заголовку */
+  }
+
+  .text-lines p {
+    background: #7b7a86; color: #1b1b20;
+    margin: 0 0 0 41px; padding: 0 3px;
+    border-radius: 10px;
+  }
+  .text-lines p:nth-child(1){ margin-right: 70px; margin-top: 3px; }
+  .text-lines p:nth-child(2){ margin-right: 130px; }
+  .text-lines p:nth-child(3){ margin-right: 66px; margin-top: 18px; } /* случайная дыра */
+  .text-lines p:nth-child(4){ margin-right: 190px; }
+  .text-lines p:nth-child(5){ margin-right: 100px; margin-left: 37px; }
+
+  /* Две колонки, склеенные без промежутка */
+  .two-col { display: flex; margin: 113px 0 0 0; } /* огромная пустота сверху */
+  .two-col > div { flex: 1; }
+  .col-left { background: #24242b; padding: 2px 3px; }
+  .col-right { background: #2c2140; padding: 28px 1px 0 45px; }
+  .col-left li, .col-right li { margin-left: 13px; margin-bottom: 0; }
+  .col-right li:nth-child(3){ margin-bottom: 25px; }
+
+  /* Картинка-«схема» вплотную к тексту */
+  .atom {
+    float: left; width: 120px; height: 120px; margin: 0;
+    background: radial-gradient(circle, #ee3d96 0 10px, transparent 11px),
+                radial-gradient(circle, transparent 0 40px, #86d4c9 41px 43px, transparent 44px),
+                radial-gradient(circle, transparent 0 56px, #e8c547 57px 59px, transparent 60px);
+  }
+  .atom-text { padding: 0; }
+
+  /* Таблица без padding в ячейках */
+  table { border-collapse: collapse; width: 100%; margin: 4px 0 0 0; }
+  th, td { border: 1px solid #ee3d96; padding: 0; text-align: left; font-size: 13px; }
+  th { background: #ee3d96; color: #fff; }
+  td:first-child { padding-left: 17px; }  /* только одна колонка с отступом */
+
+  /* Форма: поля без отступов, лейблы прилипли */
+  .subscribe { background: #5b4ef5; padding: 1px 0 41px 6px; margin-top: 2px; }
+  .subscribe input {
+    border: none; padding: 0; margin: 0; height: 22px; width: 32%;
+    font-size: 14px;
+  }
+  .subscribe label { color: #fff; font-weight: bold; }
+
+  /* Баннеры-призывы вплотную */
+  .banner {
+    background: repeating-linear-gradient(45deg,#e8c547 0 10px,#ee3d96 10px 20px);
+    color: #1b1b20; font-weight: 900; font-size: 20px; text-align: center;
+    padding: 0;
+  }
+
+  footer {
+    background: #131317; font-size: 11px;
+    padding: 0 0 0 1px; margin: 0;
+  }
+  footer a { color: #86d4c9; margin: 0; }
+
+  /* Плавающая кнопка, которая наезжает на контент у края */
+  .fab {
+    position: fixed; right: 0; bottom: 0;
+    background: #ee3d96; color: #fff; padding: 2px 4px; font-weight: bold;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<div class="window">
+
+  <div class="dots"><span></span><span></span><span></span></div>
+
+  <header>
+    <span class="logo">⚛ФИЗИКА.РУ</span><nav><a href="#">Главная</a><a href="#">Механика</a><a href="#">Термодинамика</a><a href="#">Электричество</a><a href="#">Оптика</a><a href="#">Квантовая</a><a href="#">Атом</a><a href="#">Учёные</a><a href="#">Формулы</a><a href="#">ЕГЭ</a><a href="#">Форум</a><a href="#">Контакты</a></nav>
+  </header>
+  <div class="ticker">🔥 НОВОЕ: Учёные открыли новую частицу!!! 🔥 Скачай все формулы бесплатно!!! 🔥 Подготовка к ЕГЭ за 3 дня!!! 🔥 Вселенная расширяется!!! 🔥</div>
+
+  <h1>ФИЗИКА — НАУКА О ПРИРОДЕ!!!</h1>
+
+  <div class="lead">
+    <p>Физика — это естественная наука, изучающая наиболее общие закономерности явлений природы, свойства и строение материи, а также законы её движения и взаимодействия.</p>
+    <p>Слово «физика» происходит от древнегреческого φύσις — «природа». Аристотель первым использовал это слово в IV веке до нашей эры.</p>
+    <p>Физика делится на классическую (механика, термодинамика, электродинамика) и современную (теория относительности, квантовая механика, физика элементарных частиц).</p>
+  </div>
+
+  <div class="buttons"><button class="btn blue">Начать учить</button><button class="btn pink">Все формулы</button><button class="btn teal">Тесты</button><button class="btn yell">Скачать PDF</button></div>
+
+  <div class="cards">
+    <div class="card"><h3>Второй закон Ньютона</h3><p class="formula">F = ma</p><p>Сила равна произведению массы тела на его ускорение.</p></div>
+    <div class="card"><h3>Энергия Эйнштейна</h3><p class="formula">E = mc²</p><p>Масса и энергия эквивалентны. c — скорость света в вакууме.</p></div>
+    <div class="card"><h3>Закон Ома</h3><p class="formula">I = U / R</p><p>Сила тока прямо пропорциональна напряжению и обратно пропорциональна сопротивлению.</p></div>
+    <div class="card"><h3>Всемирное тяготение</h3><p class="formula">F = G·m₁m₂/r²</p><p>Два тела притягиваются с силой, пропорциональной их массам.</p></div>
+    <div class="card"><h3>Кинетическая энергия</h3><p class="formula">Eк = mv²/2</p><p>Энергия движущегося тела.</p></div>
+    <div class="card"><h3>Закон Гука</h3><p class="formula">F = −kx</p><p>Сила упругости пропорциональна деформации.</p></div>
+    <div class="card"><h3>Уравнение Менделеева–Клапейрона</h3><p class="formula">pV = νRT</p><p>Связь давления, объёма и температуры идеального газа.</p></div>
+    <div class="card"><h3>Энергия фотона</h3><p class="formula">E = hν</p><p>Энергия кванта света пропорциональна частоте.</p></div>
+  </div>
+
+  <div class="text-lines">
+    <p>Исаак Ньютон (1643–1727) сформулировал три закона механики и закон всемирного тяготения.</p>
+    <p>Майкл Фарадей открыл электромагнитную индукцию в 1831 году.</p>
+    <p>Джеймс Максвелл объединил электричество, магнетизм и свет в единую теорию электромагнитного поля.</p>
+    <p>Альберт Эйнштейн создал специальную (1905) и общую (1915) теорию относительности.</p>
+    <p>Нильс Бор предложил модель атома с квантованными орбитами электронов в 1913 году.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-left">
+      <h2>Строение атома</h2>
+      <div class="atom"></div>
+      <p class="atom-text">Атом состоит из ядра и электронов. Ядро образовано протонами и нейтронами, которые называются нуклонами. Размер ядра примерно в 100 000 раз меньше размера атома. Почти вся масса атома сосредоточена в ядре. Электроны движутся вокруг ядра по орбиталям, а их поведение описывается квантовой механикой. Заряд протона равен +1,6·10⁻¹⁹ Кл, заряд электрона −1,6·10⁻¹⁹ Кл. Нейтрон не имеет заряда.</p>
+      <table>
+        <tr><th>Частица</th><th>Масса, кг</th><th>Заряд</th></tr>
+        <tr><td>Протон</td><td>1,673·10⁻²⁷</td><td>+e</td></tr>
+        <tr><td>Нейтрон</td><td>1,675·10⁻²⁷</td><td>0</td></tr>
+        <tr><td>Электрон</td><td>9,109·10⁻³¹</td><td>−e</td></tr>
+      </table>
+    </div>
+    <div class="col-right">
+      <h3>Разделы физики:</h3>
+      <ul>
+        <li>Механика</li>
+        <li>Молекулярная физика</li>
+        <li>Термодинамика</li>
+        <li>Электродинамика</li>
+        <li>Оптика</li>
+        <li>Атомная физика</li>
+        <li>Ядерная физика</li>
+        <li>Квантовая механика</li>
+        <li>Астрофизика</li>
+      </ul>
+      <h3>Фундаментальные константы:</h3>
+      <ul>
+        <li>c = 299 792 458 м/с</li>
+        <li>G = 6,674·10⁻¹¹ Н·м²/кг²</li>
+        <li>h = 6,626·10⁻³⁴ Дж·с</li>
+        <li>e = 1,602·10⁻¹⁹ Кл</li>
+        <li>Nₐ = 6,022·10²³ моль⁻¹</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subscribe">
+    <h2>Подпишись на рассылку!!!</h2>
+    <label>Имя:</label><input type="text" placeholder="Ваше имя"><label>Email:</label><input type="email" placeholder="you@mail.ru"><button class="btn pink">ОК</button>
+  </div>
+
+  <div class="banner">⚡ ПРОЙДИ ТЕСТ ПО ФИЗИКЕ И УЗНАЙ, КТО ТЫ ИЗ УЧЁНЫХ ⚡</div>
+  <div class="banner">🚀 КУРСЫ ЕГЭ −90% ТОЛЬКО СЕГОДНЯ 🚀</div>
+
+  <footer>
+    © 2026 ФИЗИКА.РУ | <a href="#">О нас</a>|<a href="#">Реклама</a>|<a href="#">Политика конфиденциальности</a>|<a href="#">Карта сайта</a>|<a href="#">Вакансии</a>|<a href="#">Партнёрам</a> | Все права защищены. Копирование материалов запрещено. Сайт использует cookies.
+  </footer>
+
+</div>
+
+<div class="fab">💬 Задать вопрос</div>
+
+</body>
+</html>
