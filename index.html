@@ -6,7 +6,7 @@
 <title>Физика — от атома до Вселенной</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* =========================================================
      Дизайн-система
@@ -30,6 +30,7 @@
 
     --sans: "Inter", system-ui, -apple-system, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --display: "Climate Crisis", var(--sans);
 
     --container: 1200px;
     --ease: cubic-bezier(.2, .7, .2, 1);
@@ -130,10 +131,11 @@
   .hero .container { position: relative; z-index: 2; width: 100%; padding-top: var(--s-8); padding-bottom: var(--s-7); }
 
   .hero h1 {
-    font-size: clamp(44px, 8vw + 12px, 104px);
-    font-weight: 800;
-    line-height: .95;
-    letter-spacing: -.035em;
+    font-family: var(--display);
+    font-size: clamp(32px, 5vw + 8px, 72px);   /* шрифт очень широкий — кегль меньше */
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
     margin-bottom: var(--s-5);
   }
 
