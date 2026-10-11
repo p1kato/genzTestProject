@@ -144,6 +144,25 @@
     margin-bottom: var(--s-5);
   }
 
+  /* Буквы заголовка «загораются» при наведении — как на coolors.co.
+     Слово не разрывается между буквами, каждая буква — отдельный inline-block. */
+  .hero h1 .word { white-space: nowrap; }
+  .hero h1 .ch {
+    display: inline-block;
+    position: relative;
+    transition: all .3s cubic-bezier(.6, .4, 0, 1);
+  }
+  .hero h1 .ch.wobble { animation: wobble 1s both; }
+  @keyframes wobble {
+    from { transform: translate3d(0, 0, 0); }
+    15%  { transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg); }
+    30%  { transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg); }
+    45%  { transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg); }
+    60%  { transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg); }
+    75%  { transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
+
   .hero .lead {
     max-width: 46ch;
     font-size: 17px;
@@ -408,7 +427,7 @@
     </div>
 
     <div class="container">
-      <h1 class="rise">Физика<br>от атома<br>до Вселенной</h1>
+      <h1 class="rise" aria-label="Физика от атома до Вселенной">Физика<br>от атома<br>до Вселенной</h1>
       <p class="lead rise" style="--i: 1">Естественная наука о самых общих законах природы: как устроена материя, как она движется и взаимодействует.</p>
       <span class="label status rise" style="--i: 2">Открытый справочник</span>
 
@@ -570,6 +589,57 @@
         el.style.setProperty('--i', Math.min(index, 4));
         el.classList.add('reveal');
         observer.observe(el);
+      });
+    });
+  })();
+
+  // Разноцветные буквы заголовка при наведении (логика coolors.co):
+  // каждая буква получает следующий цвет из палитры и «покачивается» 1 с,
+  // ещё через 1 с цвет сбрасывается и плавно гаснет через transition.
+  (function () {
+    var title = document.querySelector('.hero h1');
+    if (!title) return;
+
+    var colors = [
+      '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e',
+      '#10b981', '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1',
+      '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e'
+    ];
+    var next = 0;
+
+    // Текстовые узлы → слова → буквы; <br> остаются на месте
+    Array.prototype.slice.call(title.childNodes).forEach(function (node) {
+      if (node.nodeType !== Node.TEXT_NODE) return;
+      var frag = document.createDocumentFragment();
+      node.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+        var word = document.createElement('span');
+        word.className = 'word';
+        word.setAttribute('aria-hidden', 'true');
+        part.split('').forEach(function (char) {
+          var ch = document.createElement('span');
+          ch.className = 'ch';
+          ch.textContent = char;
+          word.appendChild(ch);
+        });
+        frag.appendChild(word);
+      });
+      title.replaceChild(frag, node);
+    });
+
+    title.querySelectorAll('.ch').forEach(function (ch) {
+      var timer;
+      ch.addEventListener('mouseover', function () {
+        clearTimeout(timer);
+        ch.style.color = colors[next];
+        ch.classList.add('wobble');
+        next = (next + 1) % colors.length;
+
+        timer = setTimeout(function () {
+          ch.classList.remove('wobble');
+          timer = setTimeout(function () { ch.style.color = ''; }, 1000);
+        }, 1000);
       });
     });
   })();
