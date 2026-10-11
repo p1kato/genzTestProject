@@ -20,12 +20,17 @@
     --s-1: 4px;  --s-2: 8px;  --s-3: 16px; --s-4: 24px; --s-5: 32px;
     --s-6: 48px; --s-7: 64px; --s-8: 96px; --s-9: 128px;
 
-    --bg:      #0a0a0d;
-    --bg-2:    #131318;
-    --line:    #2a2a32;
-    --text:    #f3f3f6;
-    --muted:   #8b8b97;
-    --accent:  #ee3d96;   /* только ссылки-действия и активные состояния */
+    /* Палитра: Alice Blue → Baby Blue Ice на чёрном.
+       Контраст текста к #000 (WCAG): все уровни ≥ 7:1 (AAA). */
+    --bg:      #000000;
+    --bg-2:    #0b0e17;   /* второй уровень шапки */
+    --line:    #1e2436;   /* только линии, не текст */
+    --text:    #EDF2FB;   /* Alice Blue — 18.7:1, заголовки и основной текст */
+    --text-2:  #CCDBFD;   /* Lavender — 15.1:1, абзацы */
+    --muted:   #97A4C6;   /* приглушённый — 8.4:1, подписи и метки */
+    --hint:    #7C88A8;   /* плейсхолдеры — 5.9:1 */
+    --accent:  #ABC4FF;   /* Baby Blue Ice — 12.1:1, только действия и активные состояния */
+    --on-accent: #000000; /* текст/иконки на акценте: белый дал бы 1.7:1 */
     --status:  #4ade80;   /* только индикатор «живого» статуса */
 
     --sans: "Manrope", system-ui, -apple-system, sans-serif;
@@ -119,13 +124,13 @@
       radial-gradient(1px 1px at 20px 30px, #ffffff55 50%, transparent 51%) 0 0 / 140px 140px,
       radial-gradient(1px 1px at 90px 80px, #ffffff33 50%, transparent 51%) 0 0 / 190px 190px,
       radial-gradient(1.5px 1.5px at 50px 120px, #ffffff44 50%, transparent 51%) 0 0 / 260px 260px,
-      radial-gradient(ellipse at 70% 50%, #2a1430 0%, var(--bg) 60%);
+      radial-gradient(ellipse at 70% 50%, #0f1a3a 0%, var(--bg) 60%);
   }
 
   /* Затемнение слева: текст читается, «картинка» справа остаётся яркой */
   .hero::after {
     content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: linear-gradient(90deg, var(--bg) 0%, #0a0a0dcc 35%, transparent 70%);
+    background: linear-gradient(90deg, var(--bg) 0%, #000000cc 35%, transparent 70%);
   }
 
   .hero .container { position: relative; z-index: 2; width: 100%; padding-top: var(--s-8); padding-bottom: var(--s-7); }
@@ -143,7 +148,7 @@
     max-width: 46ch;
     font-size: 17px;
     line-height: 1.6;
-    color: #d6d6de;
+    color: var(--text-2);
     margin-bottom: var(--s-3);
   }
 
@@ -181,7 +186,7 @@
     display: inline-grid; place-items: center;
     width: 18px; height: 18px; margin-left: var(--s-2);
     border-radius: 50%; background: var(--accent);
-    font-size: 11px; color: #fff; vertical-align: 2px;
+    font-size: 11px; font-weight: 700; color: var(--on-accent); vertical-align: 2px;
     transition: transform .25s var(--ease);
   }
   a:hover .arrow { transform: translateX(4px); }
@@ -205,8 +210,8 @@
   .nucleus {
     position: absolute; inset: 0; margin: auto;
     width: 14%; height: 14%; border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #ffd6ec, var(--accent) 45%, #6b1442 100%);
-    box-shadow: 0 0 80px 20px #ee3d9655, 0 0 200px 60px #5b4ef533;
+    background: radial-gradient(circle at 35% 35%, #EDF2FB, var(--accent) 45%, #33478a 100%);
+    box-shadow: 0 0 80px 20px #abc4ff55, 0 0 200px 60px #6f8cff33;
   }
   .orbit-wrap {
     position: absolute; inset: 0;
@@ -240,7 +245,7 @@
 
   /* О физике: две колонки текста */
   .about { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6); }
-  .about p { color: #c4c4cc; max-width: 52ch; }
+  .about p { color: var(--text-2); max-width: 52ch; }
 
   /* Формулы */
   .formulas {
@@ -276,7 +281,7 @@
 
   /* Атом: текст + таблица | списки */
   .atom-grid { display: grid; grid-template-columns: 3fr 2fr; gap: var(--s-8); }
-  .atom-grid > div > p { color: #c4c4cc; max-width: 60ch; margin-bottom: var(--s-6); }
+  .atom-grid > div > p { color: var(--text-2); max-width: 60ch; margin-bottom: var(--s-6); }
 
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   th, td { text-align: left; padding: var(--s-3) var(--s-3) var(--s-3) 0; border-bottom: 1px solid var(--line); }
@@ -301,7 +306,7 @@
     transition: border-color .25s var(--ease);
   }
   .field input:focus { outline: none; border-color: var(--accent); }
-  .field input::placeholder { color: #55555f; }
+  .field input::placeholder { color: var(--hint); }
 
   .btn {
     justify-self: start;
