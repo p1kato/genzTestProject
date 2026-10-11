@@ -176,26 +176,43 @@
     border-top: 1px solid var(--line);
     padding-top: var(--s-4);
     font-size: 18px; font-weight: 700;
-    transition: border-color .25s var(--ease);
+    transition: border-color .3s var(--ease), color .3s var(--ease);
   }
-  .hero-links a:hover { border-color: var(--text); }
+  .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
   .hero-links small { display: block; margin-top: var(--s-1); font-size: 14px; font-weight: 400; color: var(--muted); }
 
-  /* Стрелка в акцентном кружке: сдвигается вправо при наведении */
+  /* Стрелка в акцентном кружке: при наведении сдвигается вправо
+     и получает мягкий ореол, при нажатии слегка «проседает» */
   .arrow {
     display: inline-grid; place-items: center;
     width: 18px; height: 18px; margin-left: var(--s-2);
     border-radius: 50%; background: var(--accent);
     font-size: 11px; font-weight: 700; color: var(--on-accent); vertical-align: 2px;
-    transition: transform .25s var(--ease);
+    box-shadow: 0 0 0 0 #abc4ff00;
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
   }
-  a:hover .arrow { transform: translateX(4px); }
+  a:hover .arrow, .btn:hover .arrow {
+    transform: translateX(4px);
+    box-shadow: 0 0 0 4px #abc4ff26;
+  }
+  a:active .arrow, .btn:active .arrow { transform: translateX(4px) scale(.9); }
+
+  a:focus-visible, .btn:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 
   /* Появление при загрузке: короткий подъём с задержкой по порядку */
   .rise { animation: rise .8s var(--ease) both; animation-delay: calc(var(--i, 0) * 90ms); }
   @keyframes rise {
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: none; }
+  }
+
+  /* Появление при прокрутке. Класс .reveal ставит скрипт внизу страницы,
+     поэтому без JS всё видно сразу. Через animation, а не transition —
+     чтобы не конфликтовать с hover-переходами самих блоков. */
+  .reveal { opacity: 0; }
+  .reveal.is-visible {
+    animation: rise .7s var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
   }
 
   /* ---------- «Изображение» hero: атом из CSS ---------- */
@@ -314,8 +331,9 @@
     color: var(--text); font: inherit; font-size: 16px; font-weight: 700;
     padding: var(--s-2) 0;
     margin-top: var(--s-2);
+    transition: color .3s var(--ease);
   }
-  .btn:hover .arrow { transform: translateX(4px); }
+  .btn:hover { color: var(--accent); }
 
   /* Подвал */
   footer { border-top: 1px solid var(--line); padding: var(--s-6) 0; font-size: 13px; color: var(--muted); }
@@ -521,6 +539,41 @@
     </nav>
   </div>
 </footer>
+
+<script>
+  // Плавное появление блоков при прокрутке: один раз, без повторов.
+  // Соседние элементы одной группы появляются с небольшой задержкой (не больше 4 шагов).
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var groups = [
+      '.section-head',
+      '.about > p',
+      '.formula-card',
+      '.timeline li',
+      '.atom-grid > div',
+      '.subscribe .form'
+    ];
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+
+    groups.forEach(function (selector) {
+      document.querySelectorAll(selector).forEach(function (el) {
+        var index = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.setProperty('--i', Math.min(index, 4));
+        el.classList.add('reveal');
+        observer.observe(el);
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>
